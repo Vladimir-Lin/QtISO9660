@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.neutrino.qtiso9660</namespace>
+    <virtualFolder>QtISO9660</virtualFolder>
+    <customFilter name="Qt ISO-9660 1.6.0">
+        <filterAttribute>QtISO9660</filterAttribute>
+        <filterAttribute>1.6.0</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>QtISO9660</filterAttribute>
+        <filterAttribute>1.6.0</filterAttribute>
+        <toc>
+            <section title="Qt ISO-9660 Manual" ref="index.html">
+                <section title="English" ref="en/index.html"/>
+                <section title="Traditional Chinese" ref="tw/index.html"/>
+                <section title="Simplified Chinese" ref="cn/index.html"/>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="ISO-9660" id="CIOS::ISO9660" ref="index.html"/>
+        </keywords>
+        <files>
+            <file>*.css</file>
+            <file>*.html</file>
+            <file>images/*</file>
+            <file>en/*</file>
+            <file>cn/*</file>
+            <file>tw/*</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0043)http://dvd.sourceforge.net/dvdinfo/ifo.html -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Big5">
+    <title>IFO file</title>
+  </head>
+  <body>
+    <center>
+      <h2>Video Manager and Video Title Set IFO file headers</h2>
+    </center>
+    <table bgcolor="ffffcc" border="1">
+      <tbody>
+        <tr>
+          <th>Offset</th>
+          <th>size</th>
+          <th>VMG IFO Contents</th>
+          <th>File Structures</th>
+          <th>VTS IFO Contents</th>
+        </tr>
+        <tr>
+          <th>0000</th>
+          <td>12</td>
+          <td>DVDVIDEO-VMG</td>
+          <td rowspan="39" valign="top">
+            <center>VMG Files
+              <table bgcolor="ccffcc" border="1" cellspacing="0">
+                <tbody>
+                  <tr>
+                    <td>00000000</td>
+                    <th rowspan="2">Video_ts.ifo</th>
+                  </tr>
+                  <tr>
+                    <td>(001C)-&gt;</td>
+                  </tr>
+                  <tr>
+                    <td>(00C0)-&gt;</td>
+                    <th rowspan="2">Video_ts.vob</th>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <th rowspan="2">Video_ts.bup</th>
+                  </tr>
+                  <tr>
+                    <td>(000C)-&gt;</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>VTS Files
+                <table bgcolor="ccffcc" border="1" cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <th rowspan="2">Vts_<i>xx</i>_0.ifo</th>
+                      <td>00000000</td>
+                    </tr>
+                    <tr>
+                      <td>&lt;-(001C)</td>
+                    </tr>
+                    <tr>
+                      <th rowspan="2">Vts_<i>xx</i>_0.vob</th>
+                      <td>&lt;-(00C0)</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <th rowspan="2">Vts_<i>xx</i>_1.vob<br>
+                        <center><b>:<br>
+                            Vts_<i>xx</i>_9.vob</b></center>
+                      </th>
+                      <td>&lt;-(00C4)</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <th rowspan="2">Vts_<i>xx</i>_0.bup</th>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&lt;-(000C)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </p>
+            </center>
+          </td>
+          <td>DVDVIDEO-VTS</td>
+        </tr>
+        <tr>
+          <th>000C</th>
+          <td>4</td>
+          <td>last sector of VMG set (last sector of BUP)</td>
+          <td>last sector of title set (last sector of BUP)</td>
+        </tr>
+        <tr>
+          <th>001C</th>
+          <td>4</td>
+          <td>last sector of IFO</td>
+          <td>last sector of IFO</td>
+        </tr>
+        <tr>
+          <th>0020</th>
+          <td>2</td>
+          <td><a href="http://dvd.sourceforge.net/dvdinfo/ifo.html#ver">version
+
+
+
+
+
+              number</a></td>
+          <td><a href="http://dvd.sourceforge.net/dvdinfo/ifo.html#ver">version
+
+
+
+
+
+              number</a></td>
+        </tr>
+        <tr>
+          <th>0022</th>
+          <td>4</td>
+          <td>VMG category<br>
+            byte1=prohibited region mask</td>
+          <td>VTS category &nbsp; 0=unspecified, 1=Karaoke</td>
+        </tr>
+        <tr>
+          <th>0026</th>
+          <td>2</td>
+          <td>number of volumes</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>0028</th>
+          <td>2</td>
+          <td>volume number</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>002A</th>
+          <td>1</td>
+          <td>side ID</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>003E</th>
+          <td>2</td>
+          <td>number of title sets</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>0040</th>
+          <td>32</td>
+          <td>Provider ID</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>0060</th>
+          <td>8</td>
+          <td>VMG POS</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>0080</th>
+          <td>4</td>
+          <td>end byte address of VMGI_MAT</td>
+          <td>end byte address of VTS_MAT</td>
+        </tr>
+        <tr>
+          <th>0084</th>
+          <td>4</td>
+          <td>start address of <a
+              href="http://dvd.sourceforge.net/dvdinfo/pgc.html">FP_PGC</a><br>
+            (First Play program chain)</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th>00C0</th>
+          <td>4</td>
+          <td>start sector of Menu VOB</td>
+          <td>start sector of Menu Vob</td>
+        </tr>
+        <tr>
+          <th>00C4</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vmg.html#tt">TT_SRPT</a><br>
+            (table of titles)</td>
+          <td>start sector of Title Vob</td>
+        </tr>
+        <tr>
+          <th>00C8</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vmg.html#pgciut">VMGM_PGCI_UT</a><br>
+            (Menu Program Chain table)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vts.html#ptt">VTS_PTT_SRPT</a><br>
+            (table of Titles and Chapters)</td>
+        </tr>
+        <tr>
+          <th>00CC</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vmg.html#mait">VMG_PTL_MAIT</a><br>
+            (Parental Management masks)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vts.html#pgci">VTS_PGCI</a><br>
+            (Title Program Chain table)</td>
+        </tr>
+        <tr>
+          <th>00D0</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vmg.html#atrt">VMG_VTS_ATRT</a><br>
+            (copies of VTS audio/sub-picture attributes)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vts.html#pgciut">VTSM_PGCI_UT</a><br>
+            (Menu Program Chain table)</td>
+        </tr>
+        <tr>
+          <th>00D4</th>
+          <td>4</td>
+          <td>sector pointer to VMG_TXTDT_MG<br>
+            (text data)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo_vts.html#tmap">VTS_TMAPTI</a><br>
+            (time map)</td>
+        </tr>
+        <tr>
+          <th>00D8</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#c_adt">VMGM_C_ADT</a><br>
+            (menu cell address table)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#c_adt">VTSM_C_ADT</a><br>
+            (menu cell address table)</td>
+        </tr>
+        <tr>
+          <th>00DC</th>
+          <td>4</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vam">VMGM_VOBU_ADMAP</a><br>
+            (menu VOBU address map)</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vam">VTSM_VOBU_ADMAP</a><br>
+            (menu VOBU address map)</td>
+        </tr>
+        <tr>
+          <th>00E0</th>
+          <td>4</td>
+          <td>&nbsp;</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#c_adt">VTS_C_ADT</a><br>
+            (title set cell address table)</td>
+        </tr>
+        <tr>
+          <th>00E4</th>
+          <td>4</td>
+          <td>&nbsp;</td>
+          <td>sector pointer to <a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vam">VTS_VOBU_ADMAP</a><br>
+            (title set VOBU address map)</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0100</th>
+          <td>2</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vidatt">video
+
+
+
+
+
+              attributes</a> of VMGM_VOBS</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vidatt">video
+
+
+
+
+
+              attributes</a> of VTSM_VOBS</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0102</th>
+          <td>2</td>
+          <td>number of audio streams in VMGM_VOBS</td>
+          <td>number of audio streams in VTSM_VOBS</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0104</th>
+          <td>8*8</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#audatt">audio
+
+
+
+
+
+              attributes</a> of VMGM_VOBS</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#audatt">audio
+
+
+
+
+
+              attributes</a> of VTSM_VOBS</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0144</th>
+          <td>16</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0154</th>
+          <td>2</td>
+          <td>number of subpicture streams in VMGM_VOBS <nobr>(0 or 1)</nobr></td>
+          <td>number of subpicture streams in VTSM_VOBS <nobr>(0 or 1)</nobr></td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>0156</th>
+          <td>6</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#spatt">subpicture
+
+
+
+
+
+              attributes</a> of VMGM_VOBS</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#spatt">subpicture
+
+
+
+
+
+              attributes</a> of VTSM_VOBS</td>
+        </tr>
+        <tr bgcolor="ccffff">
+          <th>015A</th>
+          <td>164</td>
+          <td>
+            <center>reserved</center>
+          </td>
+          <td>
+            <center>reserved</center>
+          </td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0200</th>
+          <td>2</td>
+          <td>&nbsp;</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#vidatt">video
+
+
+
+
+
+              attributes</a> of VTS_VOBS</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0202</th>
+          <td>2</td>
+          <td>&nbsp;</td>
+          <td>number of audio streams in VTS_VOBS</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0204</th>
+          <td>8*8</td>
+          <td>&nbsp;</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#audatt">audio
+
+
+
+
+
+              attributes</a> of VTS_VOBS</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0144</th>
+          <td>16</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0254</th>
+          <td>2</td>
+          <td>&nbsp;</td>
+          <td>number of subpicture streams in VTS_VOBS</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0256</th>
+          <td>32*6</td>
+          <td>&nbsp;</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#spatt">subpicture
+
+
+
+
+
+              attributes</a> of VTS_VOBS</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0316</th>
+          <td>2</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr bgcolor="ffccff">
+          <th>0318</th>
+          <td>8*24</td>
+          <td>&nbsp;</td>
+          <td><a
+              href="http://dvd.sourceforge.net/dvdinfo/ifo.html#mcext">multichannel
+
+
+
+
+
+              extension</a></td>
+        </tr>
+        <tr>
+          <th>03D8</th>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <a name="ver">
+      <h4>Version Number</h4>
+      <table cols="9" width="750" bgcolor="ccccff" border="1"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th>byte</th>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="8">
+              <center>reserved, should be 0</center>
+            </td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td colspan="4">
+              <center>Major version number</center>
+            </td>
+            <td colspan="4">
+              <center>Minor version number</center>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="vidatt">
+      <h4>Video Attributes</h4>
+      <table cols="9" width="750" bgcolor="ccccff" border="1"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th>byte</th>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="2">
+              <center>Coding mode<br>
+                0 = Mpeg-1<br>
+                1 = Mpeg-2</center>
+            </td>
+            <td colspan="2">
+              <center>Standard<br>
+                0 = NTSC<br>
+                1 = PAL</center>
+            </td>
+            <td colspan="2">
+              <center>Aspect<br>
+                <nobr>0 = 4:3<br>
+                  1,2 = reserved<br>
+                  3 = 16:9</nobr></center>
+            </td>
+            <td>Automatic Pan/Scan<br>
+              <nobr>1 = disallowed</nobr></td>
+            <td>Automatic Letterbox<br>
+              <nobr>1 = disallowed</nobr></td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>CC for line 21 field 1 in GOP (NTSC only)</td>
+            <td>CC for line 21 field 2 in GOP (NTSC only)</td>
+            <td colspan="3"><nobr>Resolution NTSC (PAL)</nobr><br>
+              <nobr>0 = 720x480 (720x576)</nobr><br>
+              <nobr>1 = 704x480 (704x576)</nobr><br>
+              <nobr>2 = 352x480 (352x576)</nobr><br>
+              <nobr>3 = 352x240 (352x288)</nobr></td>
+            <td><nobr>0 = Not letterboxed</nobr><br>
+              <nobr>1 = Letterboxed</nobr></td>
+            <td>Unknown</td>
+            <td>If Standard = PAL<br>
+              0 = camera<br>
+              1 = film</td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="audatt">
+      <h4>Audio Attributes</h4>
+      <!-- VTS_AST_ATRT -->
+      <table cols="9" width="750" bgcolor="ccccff" border="1"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th>byte</th>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="3">
+              <center>Coding mode
+                <table border="0" cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <td>0 AC3 &nbsp; </td>
+                      <td>1 ??? &nbsp; </td>
+                      <td>2 Mpeg-1 &nbsp; </td>
+                      <td>3 Mpeg-2ext</td>
+                    </tr>
+                    <tr>
+                      <td>4 LPCM &nbsp; </td>
+                      <td>5 ??? &nbsp; </td>
+                      <td>6 DTS &nbsp; </td>
+                      <td>7 ???</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </center>
+            </td>
+            <td><a
+                href="http://dvd.sourceforge.net/dvdinfo/ifo.html#mcext">Multichannel
+
+
+
+
+
+                extension</a> present</td>
+            <td colspan="2">
+              <center>Language type<br>
+                0 = unspecified<br>
+                1 = per bytes 2&amp;3</center>
+            </td>
+            <td colspan="2">
+              <center>Application mode<br>
+                0 = unspecified<br>
+                1 = karaoke<br>
+                2 = surround</center>
+            </td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td colspan="2">
+              <center>Quantization/DRC<br>
+                If Coding mode=2,3<br>
+                0 = No DRC<br>
+                1 = DRC<br>
+                If Coding mode=4<br>
+                <nobr>0 = 16bps</nobr> <nobr>1 = 20bps</nobr> <nobr>2
+                  = 24bps,</nobr> <nobr>(DRC = dynamic range control)</nobr></center>
+            </td>
+            <td colspan="2">
+              <center>Sample rate<br>
+                0 = 48Kbps</center>
+            </td>
+            <td>&nbsp;</td>
+            <td colspan="3">
+              <center>channels-1</center>
+            </td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td colspan="8">
+              <center>1<sup>st</sup>character of language code</center>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td colspan="8">
+              <center>2<sup>nd</sup>character of language code</center>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td colspan="8">
+              <center>reserved for language code extension</center>
+            </td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td colspan="8">code extension, <nobr>0 = unspecified,</nobr>
+              <nobr>1 = normal,</nobr> <nobr>2 = for visually impaired,</nobr>
+              <nobr>3 = director's comments,</nobr> <nobr>4 = alternate
+                director's comments</nobr> - <nobr>see <a
+                  href="http://dvd.sourceforge.net/dvdinfo/sprm.html">SPRM
+
+
+
+
+
+                  #17</a></nobr></td>
+          </tr>
+          <tr>
+            <th>6</th>
+            <td colspan="8">&nbsp;</td>
+          </tr>
+          <tr>
+            <th rowspan="4">7</th>
+            <td colspan="8">
+              <center>Application information<br>
+                karaoke mode</center>
+            </td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td colspan="3">Channel assignments<br>
+              <nobr>0 = 1+1 (not valid),</nobr> <nobr>1 = 1/0 (not
+                valid),</nobr> <br>
+              <nobr>2 = 2/0 L,R ,</nobr> <nobr>3 = 3/0 L,M,R ,</nobr> <br>
+              <nobr>4 = 2/1 L,R,V1 ,</nobr> <nobr>5 = 3/1 L,M,R,V1 ,</nobr>
+              <br>
+              <nobr>6 = 2/2 L,R,V1,V2 ,</nobr> <nobr>7 = 3/2
+                L,M,R,V1,V2</nobr></td>
+            <td colspan="2">Karaoke version</td>
+            <td>MC intro present</td>
+            <td>0=solo, 1=duet</td>
+          </tr>
+          <tr>
+            <td colspan="8">
+              <center>surround mode</center>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <center>reserved</center>
+            </td>
+            <td>1 = suitable for Dolby surround decoding</td>
+            <td colspan="3">reserved</td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="mcext">
+      <h4>MultiChannel Extension - Karaoke mode</h4>
+      <table cols="9" width="750" bgcolor="ccccff" border="1"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th>byte (hex)</th>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+          <tr>
+            <th>00</th>
+            <td colspan="7">
+              <center>reserved</center>
+            </td>
+            <td>ACH0 Guide Melody exists</td>
+          </tr>
+          <tr>
+            <th>01</th>
+            <td colspan="7">
+              <center>reserved</center>
+            </td>
+            <td>ACH1 Guide Melody exists</td>
+          </tr>
+          <tr>
+            <th>02</th>
+            <td colspan="4">
+              <center>reserved</center>
+            </td>
+            <td>ACH2 Guide Vocal 1 exists</td>
+            <td>ACH2 Guide Vocal 2 exists</td>
+            <td>ACH2 Guide Melody 1 exists</td>
+            <td>ACH2 Guide Melody 2 exists</td>
+          </tr>
+          <tr>
+            <th>03</th>
+            <td colspan="4">
+              <center>reserved</center>
+            </td>
+            <td>ACH3 Guide Vocal 1 exists</td>
+            <td>ACH3 Guide Vocal 2 exists</td>
+            <td>ACH3 Guide Melody A exists</td>
+            <td>ACH3 Sound Effect A exists</td>
+          </tr>
+          <tr>
+            <th>04</th>
+            <td colspan="4">
+              <center>reserved</center>
+            </td>
+            <td>ACH4 Guide Vocal 1 exists</td>
+            <td>ACH4 Guide Vocal 2 exists</td>
+            <td>ACH4 Guide Melody B exists</td>
+            <td>ACH4 Sound Effect B exists</td>
+          </tr>
+          <tr>
+            <th>05-17</th>
+            <td colspan="8" bgcolor="cccccc">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="spatt">
+      <h4>Subpicture Attributes</h4>
+      <!-- VTS_SPST_ATRT -->
+      <table cols="9" width="750" bgcolor="ccccff" border="1"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th>byte</th>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="3">
+              <center>Coding mode<br>
+                0 = 2-bit rle</center>
+            </td>
+            <td colspan="3">&nbsp;</td>
+            <td colspan="2">
+              <center>Language type<br>
+                0 = unspecified<br>
+                1 = per bytes 2&amp;3</center>
+            </td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td colspan="8">&nbsp;</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td colspan="8">
+              <center>1<sup>st</sup>character of language code</center>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td colspan="8">
+              <center>2<sup>nd</sup>character of language code</center>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td colspan="8">
+              <center>reserved for language code extension</center>
+            </td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td colspan="8">code extension - see <a
+                href="http://dvd.sourceforge.net/dvdinfo/sprm.html">SPRM
+                #19</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="c_adt">
+      <h4>VMGM_C_ADT<br>
+        VTSM_C_ADT<br>
+        VTS_C_ADT</h4>
+      This table contains pointers to all the cells in the menu or title
+      set.
+      <table bgcolor="ccffcc" border="1" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>offset</th>
+            <th>0</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="2">number of VOB IDs</td>
+            <td colspan="2">reserved</td>
+            <td colspan="4">end address (last byte of last entry)</td>
+          </tr>
+          <tr>
+            <th>8...</th>
+            <td colspan="8">12-byte entries</td>
+          </tr>
+        </tbody>
+      </table>
+      each entry
+      <table bgcolor="ccffcc" border="1">
+        <tbody>
+          <tr>
+            <th>Offset</th>
+            <th>size</th>
+            <th>Contents</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td>2</td>
+            <td>VOBidn</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>1</td>
+            <td>CELLidn</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>1</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>4</td>
+            <td>starting sector within VOB</td>
+          </tr>
+          <tr>
+            <th>8</th>
+            <td>4</td>
+            <td>ending sector within VOB</td>
+          </tr>
+        </tbody>
+      </table>
+    </a><a name="vam">
+      <h4>VMGM_VOBU_ADMAP<br>
+        VTSM_VOBU_ADMAP<br>
+        VTS_VOBU_ADMAP</h4>
+      This table contains pointers to all the VOBUs in the menu or title
+      set.
+      <table bgcolor="ccffcc" border="1" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>offset</th>
+            <th>0</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+          </tr>
+          <tr>
+            <th>0</th>
+            <td colspan="4">end address (last byte of last entry)</td>
+          </tr>
+          <tr bgcolor="ffccff">
+            <th>4</th>
+            <td colspan="4">starting sector within VOB of first VOBU</td>
+          </tr>
+          <tr bgcolor="ffccff">
+            <th>8 ...</th>
+            <td colspan="4">
+              <center>possible additional entries</center>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </a>
+  </body>
+</html>

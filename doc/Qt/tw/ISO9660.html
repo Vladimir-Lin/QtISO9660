@@ -1,0 +1,1538 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0066)http://users.telenet.be/it3.consultants.bvba/handouts/ISO9960.html -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+    <meta name="ProgId" content="Word.Document">
+    <meta name="Generator" content="Microsoft Word 9">
+    <meta name="Originator" content="Microsoft Word 9">
+    <meta name="GENERATOR" content="Mozilla/4.78 [en] (X11; U; Linux
+      2.4.16 i686) [Netscape]">
+    <title>The ISO 9660 FileSystem</title>
+    <link rel="File-List"
+href="http://users.telenet.be/it3.consultants.bvba/handouts/ISO9960_files/filelist.xml">
+    <link rel="Edit-Time-Data"
+href="http://users.telenet.be/it3.consultants.bvba/handouts/ISO9960_files/editdata.mso">
+    <!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+    <!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Subject>iso9660 description</o:Subject>
+  <o:Author>Alcatel Bell</o:Author>
+  <o:Keywords>iso9660, ISO 9660 File System, CD-ROM</o:Keywords>
+  <o:Description>Article for BPV course of Timmerman</o:Description>
+  <o:LastAuthor>Gratien D'haese</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>4</o:TotalTime>
+  <o:LastPrinted>1601-01-01T00:00:00Z</o:LastPrinted>
+  <o:Created>2002-06-16T17:56:00Z</o:Created>
+  <o:LastSaved>2002-06-16T17:56:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>3512</o:Words>
+  <o:Characters>20024</o:Characters>
+  <o:Lines>166</o:Lines>
+  <o:Paragraphs>40</o:Paragraphs>
+  <o:CharactersWithSpaces>24590</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+    <!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PrintFractionalCharacterWidth/>
+  <w:HideSpellingErrors/>
+  <w:HideGrammaticalErrors/>
+  <w:AutoHyphenation/>
+  <w:DoNotHyphenateCaps/>
+  <w:DrawingGridHorizontalSpacing>6 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayVerticalDrawingGridEvery>0</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:PrintColBlack/>
+   <w:SuppressSpBfAfterPgBrk/>
+   <w:ConvMailMergeEsc/>
+   <w:UsePrinterMetrics/>
+   <w:WW6BorderRules/>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:AutoSpaceLikeWord95/>
+   <w:NoSpaceRaiseLower/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+  </w:Compatibility>
+ </w:WordDocument>
+</xml><![endif]-->
+    <style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Century Schoolbook";
+	panose-1:2 4 6 4 5 5 5 2 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:14.0pt;
+	mso-ansi-language:EN-US;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:EN-US;
+	mso-bidi-font-weight:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 207.65pt right 415.3pt;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 207.65pt right 415.3pt;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.OddHeader, li.OddHeader, div.OddHeader
+	{mso-style-name:OddHeader;
+	mso-style-parent:Header;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 207.65pt right 418.2pt;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	border:none;
+	mso-border-top-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:1.0pt 0cm 0cm 0cm;
+	font-size:16.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Century Schoolbook";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.title, li.title, div.title
+	{mso-style-name:title;
+	margin-top:0cm;
+	margin-right:2.3pt;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:48.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Century Schoolbook";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.subtitle, li.subtitle, div.subtitle
+	{mso-style-name:subtitle;
+	margin-top:30.0pt;
+	margin-right:30.6pt;
+	margin-bottom:36.0pt;
+	margin-left:1.0cm;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Century Schoolbook";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.ParHeader, li.ParHeader, div.ParHeader
+	{mso-style-name:ParHeader;
+	mso-style-next:Paragraph;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Paragraph, li.Paragraph, div.Paragraph
+	{mso-style-name:Paragraph;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:7.1pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Author, li.Author, div.Author
+	{mso-style-name:Author;
+	margin-top:42.0pt;
+	margin-right:0cm;
+	margin-bottom:54.0pt;
+	margin-left:0cm;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.Punchline, li.Punchline, div.Punchline
+	{mso-style-name:Punchline;
+	mso-style-next:Paragraph;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.EvenHeader, li.EvenHeader, div.EvenHeader
+	{mso-style-name:EvenHeader;
+	mso-style-parent:OddHeader;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 207.65pt right 418.2pt;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	border:none;
+	mso-border-top-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:1.0pt 0cm 0cm 0cm;
+	font-size:16.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Century Schoolbook";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.caption, li.caption, div.caption
+	{mso-style-name:caption;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.LargeFigure, li.LargeFigure, div.LargeFigure
+	{mso-style-name:LargeFigure;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	border:none;
+	mso-border-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:3.0pt 3.0pt 3.0pt 3.0pt;
+	mso-element:frame;
+	mso-element-frame-width:15.0cm;
+	mso-element-frame-hspace:9.05pt;
+	mso-element-frame-vspace:5.65pt;
+	mso-element-wrap:auto;
+	mso-element-anchor-vertical:page;
+	mso-element-anchor-horizontal:margin;
+	mso-element-top:.05pt;
+	mso-height-rule:exactly;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Source, li.Source, div.Source
+	{mso-style-name:Source;
+	margin-top:0cm;
+	margin-right:7.05pt;
+	margin-bottom:0cm;
+	margin-left:7.1pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:21.3pt 35.45pt 49.65pt 63.8pt 78.0pt 92.15pt;
+	background:#CCCCCC;
+	mso-shading:windowtext;
+	mso-pattern:gray-20 auto;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	border:none;
+	mso-border-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:4.0pt 4.0pt 4.0pt 4.0pt;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Spaceline, li.Spaceline, div.Spaceline
+	{mso-style-name:Spaceline;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:3.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.LargeFigureCaption, li.LargeFigureCaption, div.LargeFigureCaption
+	{mso-style-name:LargeFigureCaption;
+	mso-style-parent:LargeFigure;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	mso-element:frame;
+	mso-element-frame-width:15.0cm;
+	mso-element-frame-hspace:9.05pt;
+	mso-element-frame-vspace:5.65pt;
+	mso-element-wrap:auto;
+	mso-element-anchor-vertical:page;
+	mso-element-anchor-horizontal:margin;
+	mso-element-top:top;
+	mso-height-rule:exactly;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.SmallFigure, li.SmallFigure, div.SmallFigure
+	{mso-style-name:SmallFigure;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	border:none;
+	mso-border-alt:solid windowtext .75pt;
+	padding:0cm;
+	mso-padding-alt:3.0pt 3.0pt 3.0pt 3.0pt;
+	mso-element:frame;
+	mso-element-frame-width:7.0cm;
+	mso-element-frame-hspace:9.05pt;
+	mso-element-frame-vspace:5.65pt;
+	mso-element-wrap:no-wrap-beside;
+	mso-element-anchor-vertical:page;
+	mso-element-anchor-horizontal:column;
+	mso-element-top:.05pt;
+	mso-height-rule:exactly;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.SmallFigureCaption, li.SmallFigureCaption, div.SmallFigureCaption
+	{mso-style-name:SmallFigureCaption;
+	mso-style-parent:SmallFigure;
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	mso-element:frame;
+	mso-element-frame-width:7.0cm;
+	mso-element-frame-hspace:9.05pt;
+	mso-element-wrap:no-wrap-beside;
+	mso-element-anchor-vertical:page;
+	mso-element-anchor-horizontal:column;
+	mso-element-top:top;
+	mso-height-rule:exactly;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.Indent, li.Indent, div.Indent
+	{mso-style-name:Indent;
+	mso-style-parent:Paragraph;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:25.1pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:-18.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ParRef, li.ParRef, div.ParRef
+	{mso-style-name:ParRef;
+	mso-style-parent:Paragraph;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-indent:7.2pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:21.0cm 842.0pt;
+	margin:72.0pt 89.85pt 72.0pt 89.85pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-header:url("./ISO9960_files/header.htm") h1;
+	mso-footer:url("./ISO9960_files/header.htm") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+@page Section2
+	{size:21.0cm 842.0pt;
+	margin:69.75pt 3.0cm 49.65pt 3.0cm;
+	mso-header-margin:28.4pt;
+	mso-footer-margin:25.6pt;
+	mso-columns:2 even 1.0cm;
+	mso-header:url("./ISO9960_files/header.htm") h1;
+	mso-footer:url("./ISO9960_files/header.htm") f1;
+	mso-paper-source:0;}
+div.Section2
+	{page:Section2;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:-2;
+	mso-list-type:simple;
+	mso-list-template-ids:42652648;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-text:*;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0cm;
+	text-indent:0cm;}
+@list l0:level1 lfo1
+	{mso-level-start-at:1;
+	mso-level-number-format:bullet;
+	mso-level-numbering:continue;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	mso-level-legacy:yes;
+	mso-level-legacy-indent:18.0pt;
+	mso-level-legacy-space:0cm;
+	margin-left:25.1pt;
+	text-indent:-18.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+  </head>
+  <body style="tab-interval:36.0pt" lang="EN-GB" link="#0000EE"
+    text="#000000" vlink="#551A8B" alink="#FF0000" bgcolor="#FFFFFF">
+    <div class="Section1">
+      <div class="title">The ISO 9660 File System</div>
+      <p class="MsoNormal"><span lang="EN-US"><!--[if !supportEmptyParas]--><!--[endif]--><o:p></o:p></span>
+      </p>
+      <p class="subtitle" style="margin-top: 30pt; margin-right:
+        14.15pt; margin-bottom: 36pt; margin-left: 14.2pt; ">This
+        article describes the ISO 9660 file system format used on
+        compact disc read only memory (CD-ROM). CD-ROMs have become so
+        popular (and cheap) that its market share grew exponential over
+        the last years. Therefore, it is worthwhile to examine the file
+        system used on CD-ROMs. What makes it different to other file
+        systems such as the UNIX File System (UFS) used on e.g. SunOS
+        systems? </p>
+      <p class="Author">Gratien D?haese <br>
+        Alcatel Bell <br>
+        Switching Systems Division <br>
+        May 1995 <br>
+        &nbsp; </p>
+      <p><!--[if !supportLineBreakNewLine]--> <br>
+        <!--[endif]--></p>
+    </div>
+    <span style="font-size: 10pt; font-family: Arial; "> <br>
+    </span>
+    <div class="Section2">
+      <div class="ParHeader">Introduction<span style="font-size: 16pt; "><o:p></o:p></span></div>
+      <p class="Paragraph"><span style="font-size: 16pt; ">T</span>he
+        audio compact disks are only one decade old, but surprisingly
+        enough it pushed the vinyl records completely from the market.
+        It was in the beginning of the 1980s that Philips and Sony
+        introduced the Compact Disc Digital Audio (CD-DA) Standard,
+        better known as the Red Book standard. </p>
+      <p class="Paragraph">It was also Philips and Sony who introduced
+        in 1984 the CD-ROM (Compact Disc Read Only Memory) standard,
+        which is commonly known as the Yellow Book standard. </p>
+      <p class="Paragraph">The computer industry immediately saw the
+        benefits of CD-ROMs, namely: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> cheaper in production
+        than tapes </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> cheaper in shipping to
+        customers </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> less vulnerable to
+        dust, fingerprints, magnetic fields than tapes </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> large capacity, more
+        than 600 Mbytes </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> cannot be overwritten
+        by accident, because it is a read-only medium </p>
+      <p class="Paragraph">Therefore, it did not take long before the
+        CD-ROM became quiet popular among developers and customers. </p>
+      <p class="Paragraph">However, to make a CD-ROM was until last year
+        problematic because for mastering a CD-ROM special equipment was
+        needed. These so called CD-writers have become affordable now,
+        so that making a CD-ROM master (which can also be read with
+        normal CD drives) is no big deal anymore. Making duplicates (the
+        silver CD-ROMs) from a master (the golden CD-ROM) costs about 60
+        BEF a piece, which is a fair price! </p>
+      <p class="Paragraph">The only problem was that CD-ROMs were not
+        interchangeable amongst different computer architectures. The
+        ISO 9660 standard was created to define the external
+        characteristics of data on a CD-ROM to make it architecture
+        independent. The first standard did not quite go far enough, so
+        an <i>ad hoc</i> committee of hardware and software suppliers
+        met at the High Sierra Hotel in Nevada (USA) and drew up a
+        proposal for the ?High Sierra? format for CD-ROM file structure.
+        The previous ISO 9660 standard and the High Sierra file
+        structure were combined into a complete ISO 9660 standard
+        (1988). </p>
+      <p class="Paragraph">There are almost 6 million CD readers sold
+        until now, which proves that CD-ROMs are a very popular medium
+        among the commercial and non-commercial end-users. </p>
+      <p class="ParHeader">Colour books of standards </p>
+      <p class="Paragraph">The Compact Disc Digital Audio (CD-DA)
+        standard (or just CD) made by Philips and Sony in the early
+        1980s became the de facto standard for all audio discs, and
+        means that any CD plays on any audio CD drive. This standard
+        became known as the Red Book. The Red Book specifies that the
+        audio data is on the CD in one or more tracks. Each track is
+        normally one song. These tracks are further subdivided into
+        sectors that are 1/75 of a second in length and contain 2352
+        bytes of audio data in digital form. A maximum of 99 audio
+        tracks may be placed on a standard Red Book disc. </p>
+      <p class="Paragraph">In addition to the 2352 bytes of audio data,
+        the Red Book specifies the addition of 2 layers of error
+        detection and error correction code (EDC/ECC). The compact disc
+        utilises the Cross Interleave Reed-Solomon Code (CIRC) in its
+        first two layers of error protection. If a disc gets scratched
+        or dirty and a laser cannot read the data, the CD player uses
+        the CIRC to recreate the music. </p>
+      <p class="Paragraph">Each sector is also assigned 98 control
+        bytes, which control the timing information that the CD player
+        uses to display the length of each song.<o:p></o:p> </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The Yellow Book
+        standard was introduced by Philips and Sony in 1984 which
+        defined the Compact Disc Read Only Memory (CD-ROM) layout. </p>
+      <p class="Paragraph">The Yellow Book further defined the Red Book
+        by adding two new types of tracks. </p>
+      <p class="Paragraph">The track type defined in the Red Book is: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> CD-Audio,<span
+          style="mso-tab-count:1"></span> for audio music. </p>
+      <p class="Paragraph">The two new track types defined in the Yellow
+        Book are: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> CD-ROM Mode 1, usually
+        used for computer data. </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> CD-ROM Mode 2, usually
+        used for compressed audio data, and video/picture data. Also,
+        usually further defined as XA (eXtended Architecture). </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The CD-ROM Mode
+        1 and Mode 2 tracks use the Red Book specifications as a
+        foundation. The difference between the Red Book and the Yellow
+        Book is a redefinition of the 2352 byte Red Book data area. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">Furthermore, the
+        Yellow Book CD-ROM Mode 1 and Mode 2 use the same track layout
+        as the Red Book specification, including the error correction
+        and control bytes. The fundamental difference between the two
+        Yellow Book CD-ROM modes is the way in which they use the main
+        data segment. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The Yellow Book
+        CD-ROM Mode 1 defines the ISO 9960 and non-ISO 9660 standards.
+        The ISO 9660 compliant CD-ROMs are readable by any kind of
+        (modern) operating systems, such as DOS, UNIX, MacOS, AmigaDOS
+        and other OSes. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The CD-ROM Mode
+        1 divides the 2352 byte data area defined by the Red Book
+        standards into the following: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 12 bytes of
+        synchronisation </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 4 bytes of header
+        information </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 2048 bytes of user
+        information </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 288 bytes of error
+        correction and detection codes. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The first 16
+        bytes contain the synchronisation and header information that
+        the computer uses to determine which sector it is reading. The
+        following 2048 bytes contain the actual user data. Together,
+        these two subdivisions comprise the full 2352 byte portion of
+        the Red Book standard. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">The last 288
+        bytes carry an additional layer of error correction and
+        direction code. This additional layer, which is found only in
+        Mode 1, provides the reliability that is needed for certain
+        types of computer data. </p>
+      <p class="Paragraph" style="text-indent: 7.2pt; ">CD-ROM Mode 2
+        redefines the use of the 2352 byte data area as follows: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 12 bytes of
+        synchronisation </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 4 bytes of header
+        information </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> 2336 bytes of user
+        data. </p>
+      <p class="Paragraph">The main advantage of Mode 2 is that it
+        provides an additional 14 per cent of the user data space per
+        sector (2336 versus 2048 bytes). The reason is that Mode 2 does
+        not have the additional EDC and ECC error correction data of
+        Mode 1. </p>
+      <p class="Paragraph">Mode 2 discs are normally used in extended
+        architecture (XA) format. Even without XA, there are still two
+        layers of error correction as defined in the Red Book standard.
+        CD-ROM Mode 2 discs can be read by a standard CD-ROM drive, but
+        require special software to decode and strip the user data from
+        each sector. </p>
+      <p class="Paragraph">CD-ROM Mode 2 allows compressed audio data
+        and video/picture data to be incorporated on the disc, thanks to
+        the alignment of the byte layout. The drawback is that a CD-ROM
+        drive reading this data cannot read computer data while it?s
+        playing audio. </p>
+      <p class="Paragraph">The next step in CD technology was to create
+        a file format that lent itself to the incorporation of audio and
+        video/picture data. To define this extension to the Yellow Book
+        standard, Sony and Philips produced the Compact Disc Read Only
+        Memory Extended Architecture (CD-ROM/XA). The XA disc has
+        compressed audio<span style="mso-spacerun: yes"></span>and
+        computer data interleaved on the same track, so it can read the
+        computer data and play audio on the same time. </p>
+      <p class="Paragraph">This was a dramatic improvement on existing
+        Yellow Book technology, and marks the point from which
+        application discs that made best use of CD-ROM technology
+        started to develop. CD-ROM/XA Mode 2 is subdivided into Form 1
+        (for computer data) and Form 2 (for compressed audio data and
+        video/picture data). </p>
+      <p class="Paragraph">The Compact Disc Interactive (CD-I) Media
+        standard was released in 1987 by Philips. This standard
+        specifies the CD-I disc layout and an operating system called
+        CD-RTOS. This specification is known as the Green Book standard.
+        Like CD-ROM/XA, this standard allows for the interleaving of
+        computer data and compressed audio on the same track. The CD-I
+        track is not shown in the table of contents on the disc. This
+        prevents audio players from playing the CD-I track. The sector
+        layout of a CD-I disc is identical to CD-ROM/XA. A CD-I system
+        consists of a stand-alone CD-I player connected to a TV set. </p>
+      <p class="Paragraph">Remember, the main drawback of a CD-ROM is,
+        at least for some people, that it is a read-only medium (the ROM
+        part of it?s name)! Writable mediums were needed to fulfil new
+        (created) needs. In Frankfurt (Germany) a group was formed
+        (guess the name) - the Frankfurt Group - which includes Philips,
+        Sony, Kodak and others to take CD-ROM into the writable market.
+        This became the Orange Book standard defining a CD that lets
+        users write audio and/or data to disc. Part 1 of the Orange Book
+        describes a Compact Disc-Magneto Optical (CD-MO) where data can
+        be written, erased and rewritten. Part 2 describes a Compact
+        Disc Write Once (CD-WO) where data can be written but not
+        erased. The CD-WO is better known under it?s name CD-R where R
+        stands for recordable. CD writers are becoming quite popular
+        these days (and affordable). </p>
+      <p class="ParHeader">CD-ROM Hardware </p>
+      <p class="Paragraph">CD-ROM drives in general function like any
+        other write-protected disk drive, and the device driver level
+        appear quite ordinary. </p>
+      <p class="Paragraph">CD-ROMs do not have a fixed number of sectors
+        in a fixed-arm position. Instead, an inward spiral of records is
+        arranged to maintain minimal latency from record to record. </p>
+      <p class="Paragraph">Furthermore, CD-ROMs are not random access,
+        but rather sequential access, which is why they tend to be slow,
+        because the head hunts to find the desired record. The sectors
+        are indexed by track in the same way cylinder, head, and sector
+        indices are used in a hard-disk drive. With SCSI, these sectors
+        are hidden by logical address translation in the drive?s
+        controller. Unlike with hard drives, a separate head is not used
+        for timing information, so each time a CD-ROM is moved for
+        random access it must search up and down the spiral in the
+        vicinity the head let down to find the desired sector. </p>
+      <p class="Paragraph">CD-ROM sector sizes are large, usually 2048
+        bytes per sector (larger sizes are possible). Therefore, the
+        concept of <i>logical sectors</i> is introduced. Each logical
+        sector, with a constant logical sector size (= the sector size),
+        starts in a different sector from any other logical sector. </p>
+      <p class="ParHeader">File Systems on CD-ROM </p>
+      <p class="Paragraph">A CD-ROM may be mastered with any kind of
+        information on it. Sun Microsystems, for example, uses the
+        Berkeley UNIX UFS file systems on many CD-ROMs. This make them
+        only usable on Sun equipment, which is no big deal for a
+        bootable CD-ROM with an operating system on it, but for
+        distributing general information it?s a big limitation. </p>
+      <p class="Paragraph">However, because CD-ROMs are especially
+        suited to volume publishing of information, a standard file
+        system useful across many kinds of architecture is very
+        desirable. Before there was a standard on this matter some were
+        using the High Sierra format on CD-ROM, which arranged file
+        information in a dense, sequential layout to minimise
+        nonsequential access. </p>
+      <p class="Paragraph">The High Sierra file system format uses a
+        hierarchical (eight levels of directories deep) tree file system
+        arrangement, similar to UNIX and MS-DOS. High Sierra has a
+        minimal set of file attributes (directory or ordinary file and
+        time of recording) and name attributes (name, extension, and
+        version). The designers realised they could never get people to
+        agree on a unified definition of file attributes, so the minimum
+        <i>common </i>information was encoded, and a place for future
+        optional extensions (system use area) was defined for each file.
+      </p>
+      <p class="Paragraph">High Sierra was soon adapted (with changes)
+        as an international standard (ISO 9660-1988), and the ISO 9660
+        file system format is now used throughout the industry. </p>
+      <p class="ParHeader">The ISO 9660 File System </p>
+      <p class="Paragraph">An ISO 9660 CD-ROM is described in Figure 1.
+      </p>
+      <div
+style="mso-element:frame;mso-element-wrap:auto;mso-element-anchor-horizontal:page;mso-element-left:91.65pt;mso-element-top:64.85pt;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div style="border-top-width: 0.75pt; border-top-style:
+                  solid; border-top-color: rgb(0,0,57);
+                  border-right-width: 0.75pt; border-right-style: solid;
+                  border-right-color: rgb(0,0,57); border-bottom-width:
+                  0.75pt; border-bottom-style: solid;
+                  border-bottom-color: rgb(0,0,57); border-left-width:
+                  0.75pt; border-left-style: solid; border-left-color:
+                  rgb(0,0,57); padding-top: 3pt; padding-right: 3pt;
+                  padding-bottom: 3pt; padding-left: 3pt; ">
+                  <div class="LargeFigure"
+                    style="mso-element:frame;mso-element-wrap:auto;
+                    mso-element-anchor-horizontal:page;mso-element-left:91.65pt;mso-element-top:
+
+
+                    64.85pt;mso-height-rule:exactly"><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+   coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+   filled="f" stroked="f">
+   <v:stroke joinstyle="miter"/>
+   <v:formulas>
+    <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+    <v:f eqn="sum @0 1 0"/>
+    <v:f eqn="sum 0 0 @1"/>
+    <v:f eqn="prod @2 1 2"/>
+    <v:f eqn="prod @3 21600 pixelWidth"/>
+    <v:f eqn="prod @3 21600 pixelHeight"/>
+    <v:f eqn="sum @0 0 1"/>
+    <v:f eqn="prod @6 1 2"/>
+    <v:f eqn="prod @7 21600 pixelWidth"/>
+    <v:f eqn="sum @8 21600 0"/>
+    <v:f eqn="prod @7 21600 pixelHeight"/>
+    <v:f eqn="sum @10 21600 0"/>
+   </v:formulas>
+   <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+   <o:lock v:ext="edit" aspectratio="t"/>
+  </v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:425.25pt;
+   height:323.25pt'>
+   <v:imagedata src="./ISO9960_files/image001.png" o:title=""/>
+  </v:shape><![endif]--><!--[if !vml]--><img
+                      src="../images/image002.gif"
+                      v:shapes="_x0000_i1025" width="567" height="431"><!--[endif]--></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+style="mso-element:frame;mso-element-wrap:auto;mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:403.25pt;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div class="LargeFigureCaption"
+                  style="mso-element:frame;mso-element-wrap:auto;
+                  mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:
+
+
+                  403.25pt;mso-height-rule:exactly"><b>Figure 1</b>: ISO
+                  9660 CD-ROM</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="Paragraph">A reserved field at the beginning of the
+        disk is present for use in booting CD-ROM on a computer (system
+        area). As a matter of fact its use was not specified by the ISO
+        9660 standard, but generally it is used for boot information.</div>
+      <p class="Paragraph">Immediately afterwards, a series of volume
+        descriptors details the contents and kind of information
+        contained on the disk (something like the partition table of
+        MS-DOS). </p>
+      <p class="Paragraph">A volume descriptor describes the
+        characteristics of the file system information present on a
+        given CD-ROM, or volume. It is divided into two parts; </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> the type of volume
+        descriptor, and </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--> the characteristics of
+        the descriptor. </p>
+      <p class="Paragraph"><span style="mso-spacerun: yes"></span>The
+        volume descriptor is constructed in this matter so that if a
+        program reading the disk does not understand a particular
+        descriptor, it can just skip over it until it finds one it
+        recognises, thus allowing the use of many different types of
+        information on one CD-ROM. Also, if an error were to render a
+        descriptor unreadable, a subsequent redundant copy of a
+        descriptor could then allow for fault recovery. When checking
+        CD-ROMs with a <i>dump </i>utility we find each descriptor
+        back in a single logical sector on itself, and also a backup of
+        the descriptor a few logical sectors further. </p>
+      <p class="Paragraph">The minimum requirement is that it has a
+        primary descriptor describing the ISO 9660 file system and an
+        ending descriptor (a variable length table that contains
+        information on how many other descriptors are present). </p>
+      <p class="ParHeader">Little/Big Endian </p>
+      <p class="Paragraph">In order to accommodate the two common byte
+        orders, Big Endian (680x0, Sparc) and Little Endian (80x86,
+        Rx000), ISO 9660 has data types which allow either and
+        consequently are twice as big. </p>
+      <p class="Paragraph">For example, the 32-bit integer (0x11223344)
+        is represented as the byte sequence (0x44, 0x33, 0x22, 0x11,
+        0x11, 0x22, 0x33, 0x44), which is essentially a binary
+        palindrome. </p>
+      <p class="Paragraph">This method is often referred to as 733
+        (section 7.3.3 from the ISO 9660 standard, both byte orders) and
+        is represented in Figure 2. <br>
+        &nbsp; </p>
+      &nbsp;
+      <div
+style="mso-element:frame;mso-element-wrap:no-wrap-beside;mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:648.05pt;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="277" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 0cm; padding-right: 9.05pt;
+                padding-bottom: 0cm; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div class="SmallFigureCaption"
+                  style="mso-element:frame;mso-element-wrap:no-wrap-beside;
+                  mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:
+
+
+                  648.05pt;mso-height-rule:exactly"><b>Figure 2</b>:
+                  Both Byte Orders</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if !supportTextWrap]--><!--[endif]-->
+      <div
+        style="mso-element:frame;mso-element-frame-width:197.55pt;mso-element-frame-height:109.55pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-horizontal:page;
+
+        mso-element-left:84.45pt;mso-element-top:532.85pt">&nbsp; <br>
+        <table vspace="0" width="275" height="161" hspace="0"
+          cellpadding="0" cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT" height="161">
+                <div style="border-top-width: 0.75pt; border-top-style:
+                  solid; border-top-color: rgb(0,0,57);
+                  border-right-width: 0.75pt; border-right-style: solid;
+                  border-right-color: rgb(0,0,57); border-bottom-width:
+                  0.75pt; border-bottom-style: solid;
+                  border-bottom-color: rgb(0,0,57); border-left-width:
+                  0.75pt; border-left-style: solid; border-left-color:
+                  rgb(0,0,57); padding-top: 3pt; padding-right: 3pt;
+                  padding-bottom: 3pt; padding-left: 3pt; ">
+                  <div class="SmallFigure"
+                    style="mso-element:frame;mso-element-frame-width:197.55pt;
+mso-element-frame-height:109.55pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-horizontal:
+page;mso-element-left:84.45pt;mso-element-top:532.85pt"><!--[if gte vml 1]><v:shape
+   id="_x0000_i1026" type="#_x0000_t75" style='width:198.75pt;height:96pt'>
+   <v:imagedata src="./ISO9960_files/image003.gif" o:title=""/>
+  </v:shape><![endif]--><!--[if !vml]--><img
+                      src="../images/image003.gif"
+                      v:shapes="_x0000_i1026" width="265" height="128"><!--[endif]--></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--[if !supportTextWrap]-->
+      <p><!--[endif]--> </p>
+      <p class="Paragraph">Figure 2 illustrates, the Big Endian
+        addressing model assigns or maps the lowest address to the
+        highest-order (that is, the most significant or leftmost) data
+        byte of a multibyte-scalar data item. The Little Endian<span
+          style="mso-spacerun: yes"></span>addressing model assigns or
+        maps the lowest address to the lowest-order (least significant
+        or right-most) data byte of a multibyte-scalar data item. </p>
+      <p class="ParHeader">ISO 9660 Primary Volume Descriptor </p>
+      <p class="Paragraph">The ISO 9660 primary volume descriptor
+        describes the characteristics of the ISO standard file system
+        information present on a given CD-ROM (refer to Figure 3). </p>
+      <p class="Paragraph">The ISO 9660 primary volume descriptor acts
+        much like the superblock of the UNIX file system, providing
+        details on the ISO 9660 compliant portion of the disk. Contained
+        within the primary volume descriptor is the root directory
+        record describing the location of the contiguous root directory.
+        (As in UNIX, directories appear as files for the operating
+        system?s special use). Directory entries are successively stored
+        within this region. Evaluation of the ISO 9660 filenames is
+        begun at this location. The root directory is stored as an
+        extent, or sequential series of sectors, that contains each of
+        the directory entries appearing in the root. In addition, since
+        ISO 9660 works by segmenting the CD-ROM into logical blocks, the
+        size of these blocks is found in the primary volume descriptor
+        as well. </p>
+      <p class="Paragraph">A CD-ROM is only compliant to the ISO 9660
+        file system standard if there is a primary descriptor, and when
+        there is an ending descriptor available (<i>e.g.,</i> the volume
+        descriptor constitute a variable length table which contains
+        information on how many other descriptors are present). </p>
+      <p class="Paragraph">It is possible to have many kind of file
+        systems and information arrangements on a single CD-ROM.
+        However, while many other kinds of descriptors can be used to
+        optionally record non-ISO defined information contents, the
+        primary volume descriptor is always present. It is even possible
+        to have a Mixed Mode disc, containing audio tracks and data
+        tracks on the same disc. The most common type of Mixed Mode
+        discs is one where the first track on the disc is Mode 1 data
+        (ISO 9660 or non-ISO 9660), and the remaining tracks on the disc
+        are audio tracks. Another possibility is the so called Hybrid
+        disc, which contains an ISO 9660 part and a non-ISO 9660 part
+        (e.g. Apple HFS format). The popular magazine on CD-ROM called
+        ?CD-ROM Today? is an example of an Hybrid disc. </p>
+      <p class="Paragraph">Referring back to Figure 3, the first entry
+        is the Volume Descriptor Type (<i>type</i>), where it can have
+        the following values: </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Number 0</b>: shall
+        mean that the Volume Descriptor is a Boot Record </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Number 1</b>: shall
+        mean that the Volume Descriptor is a Primary Volume Descriptor </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Number 2</b>: shall
+        mean that the Volume Descriptor is a Supplementary Volume
+        Descriptor<o:p></o:p> </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Number 3</b>: shall
+        mean that the Volume Descriptor is a Volume Partition Descriptor
+      </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Numbers 4-254</b>
+        are reserved </p>
+      <p class="Indent" style="mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span
+          style="font-family: Symbol; ">·<span style="font-family:
+            &quot;Times New Roman&quot;; font-style: normal;
+            font-variant: normal; font-weight: normal; font-size: 7pt;
+            line-height: normal; font-stretch: normal; font-size-adjust:
+            none; "></span></span><!--[endif]--><b> Number 255</b>:
+        shall mean that the Volume Descriptor is a Volume Descriptor Set
+        Terminator. </p>
+      <div
+style="mso-element:frame;mso-element-wrap:auto;mso-element-anchor-horizontal:page;mso-element-left:84.45pt;mso-element-top:64.85pt;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div style="border-top-width: 0.75pt; border-top-style:
+                  solid; border-top-color: rgb(0,0,57);
+                  border-right-width: 0.75pt; border-right-style: solid;
+                  border-right-color: rgb(0,0,57); border-bottom-width:
+                  0.75pt; border-bottom-style: solid;
+                  border-bottom-color: rgb(0,0,57); border-left-width:
+                  0.75pt; border-left-style: solid; border-left-color:
+                  rgb(0,0,57); padding-top: 3pt; padding-right: 3pt;
+                  padding-bottom: 3pt; padding-left: 3pt; ">
+                  <div class="LargeFigure"
+                    style="mso-element:frame;mso-element-wrap:auto;
+                    mso-element-anchor-horizontal:page;mso-element-left:84.45pt;mso-element-top:
+
+
+                    64.85pt;mso-height-rule:exactly"><!--[if gte vml 1]><v:shape id="_x0000_i1027"
+   type="#_x0000_t75" style='width:425.25pt;height:459pt'>
+   <v:imagedata src="./ISO9960_files/image004.png" o:title=""/>
+  </v:shape><![endif]--><!--[if !vml]--><img
+                      src="../images/image005.gif"
+                      v:shapes="_x0000_i1027" width="567" height="612"><!--[endif]--></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+style="mso-element:frame;mso-element-wrap:auto;mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:532.85pt;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div class="LargeFigureCaption"
+                  style="mso-element:frame;mso-element-wrap:auto;
+                  mso-element-anchor-horizontal:page;mso-element-left:86.4pt;mso-element-top:
+
+
+                  532.85pt;mso-height-rule:exactly"><b>Figure 3</b>:
+                  File structure of an ISO 9660 primary volume
+                  descriptor</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="Paragraph">The second entry is called the Standard
+        Identifier (<i> id</i>) and is set to ?CD001? for a CD-ROM
+        compliant to the ISO 9660 standard.</div>
+      <p class="Paragraph">Another interesting field is the Volume Space
+        Size (<i> volume_space_size</i>) which contains the amount of
+        data available on the CD-ROM. It is recorded according the 733
+        method (see Figure 4). </p>
+      <div
+        style="mso-element:frame;mso-element-wrap:auto;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div style="border-top-width: 0.75pt; border-top-style:
+                  solid; border-top-color: rgb(0,0,57);
+                  border-right-width: 0.75pt; border-right-style: solid;
+                  border-right-color: rgb(0,0,57); border-bottom-width:
+                  0.75pt; border-bottom-style: solid;
+                  border-bottom-color: rgb(0,0,57); border-left-width:
+                  0.75pt; border-left-style: solid; border-left-color:
+                  rgb(0,0,57); padding-top: 3pt; padding-right: 3pt;
+                  padding-bottom: 3pt; padding-left: 3pt; ">
+                  <div class="LargeFigure"><!--[if gte vml 1]><v:shape id="_x0000_i1028" type="#_x0000_t75"
+   style='width:425.25pt;height:264.75pt'>
+   <v:imagedata src="./ISO9960_files/image006.gif" o:title=""/>
+  </v:shape><![endif]--><!--[if !vml]--><img
+                      src="../images/image006.gif"
+                      v:shapes="_x0000_i1028" width="567" height="353"><!--[endif]--></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        style="mso-element:frame;mso-element-wrap:auto;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div class="LargeFigureCaption"><b>Figure 4</b>: A dump
+                  of a file structure of an ISO 9660 primary volume
+                  descriptor</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="Paragraph">Figure 4 is a dump of a CD-ROM (made by the
+        Belgian UNIX systems Users Group (B.U.U.G.) containing Linux 95)
+        starting at logical sector 16 and we see the first 256 bytes (of
+        the 2048 bytes). The rectangles made in Figure 4 are
+        respectively the Standard Identifier, System Identifier, Volume
+        Space Size (check if you can find the binary palindrome), Volume
+        Set Size, Volume Sequence Number, Logical Block Size, Path Table
+        Size, and the Directory Record for the Root Directory. Together
+        with Figure 3 you can follow the parameters in Figure 4. Also,
+        together with Figure 4 and Figure 5 you should be able to
+        discover to way the Directory Record of the Root Directory is
+        represented on a CD-ROM (explained in following paragraphs).</div>
+      <p class="ParHeader">Directory-entry Format </p>
+      <p class="Paragraph">A directory entry is a data structure that
+        describes the characteristics of a file or directory, beginning
+        with a length octet describing the size of the entire entry.
+        Entries themselves are of variable length, up to 255 octets in
+        size. Attributes for the file described by the directory entry
+        are stored in the directory entry itself (unlike UNIX). </p>
+      <p class="Paragraph">In Figure 5, the root directory entry is a
+        variable length object, so that the name can be of variable
+        length. (No other part in the directory entry is of variable
+        length). </p>
+      <div
+        style="mso-element:frame;mso-element-wrap:auto;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div style="border-top-width: 0.75pt; border-top-style:
+                  solid; border-top-color: rgb(0,0,57);
+                  border-right-width: 0.75pt; border-right-style: solid;
+                  border-right-color: rgb(0,0,57); border-bottom-width:
+                  0.75pt; border-bottom-style: solid;
+                  border-bottom-color: rgb(0,0,57); border-left-width:
+                  0.75pt; border-left-style: solid; border-left-color:
+                  rgb(0,0,57); padding-top: 3pt; padding-right: 3pt;
+                  padding-bottom: 3pt; padding-left: 3pt; ">
+                  <div class="LargeFigure"><!--[if gte vml 1]><v:shape id="_x0000_i1029" type="#_x0000_t75"
+   style='width:425.25pt;height:215.25pt'>
+   <v:imagedata src="./ISO9960_files/image007.png" o:title=""/>
+  </v:shape><![endif]--><!--[if !vml]--><img
+                      src="../images/image008.gif"
+                      v:shapes="_x0000_i1029" width="567" height="287"><!--[endif]--></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        style="mso-element:frame;mso-element-wrap:auto;mso-height-rule:exactly">&nbsp;
+
+        <br>
+        <table vspace="0" width="579" hspace="0" cellpadding="0"
+          cellspacing="0">
+          <caption><br>
+          </caption><tbody>
+          </tbody> <tbody>
+            <tr>
+              <td style="padding-top: 5.65pt; padding-right: 9.05pt;
+                padding-bottom: 5.65pt; padding-left: 9.05pt; "
+                valign="TOP" align="LEFT">
+                <div class="LargeFigureCaption"><b>Figure 5</b>: Data
+                  Structure of a CD-ROM file system directory entry</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ParHeader">File Attributes</div>
+      <p class="Paragraph">File attributes are very simple in ISO-9660.
+        The most important file attribute is determining whether the
+        file is a directory or an ordinary file.<span
+          style="mso-spacerun: yes"></span>File attributes for the file
+        described by the directory entry are stored in the directory
+        entry and optionally, in the extended attribute record. The name
+        length field specifies how long the name is and is limited to 31
+        characters. </p>
+      <p class="ParHeader">Filenames </p>
+      <p class="Paragraph">Filenames in ISO-9660 correspond to a
+        DOS-like representation, with an uppercase, fixed-size base
+        name, a delimiter (a period) to separate filenames from the
+        extension, and a three-letter extension name (also uppercase).
+        Directory names contain maximum 8 characters and do not have
+        extensions. </p>
+      <p class="Paragraph">With filenames the extension may be followed
+        another delimiter (a semicolon) and a revision number of the
+        file. For example, a typical filename would be FOO.BAR;1. There
+        are additional restrictions on the type of allowed characters
+        beyond that of alpha characters (0-9 and _). </p>
+      <p class="Paragraph">The choice of filename is thus restricted to
+        allow for the vast number of different systems that existed at
+        the time the standard was determined. While the directory
+        entries allow much larger names than this, the characteristics
+        and size of the filename were developed to achieve level-one
+        compliance with original High Sierra format. </p>
+      <p class="Paragraph">Unfortunately, many systems with ISO 9660
+        capability are not compatible with the naming conventions. For
+        example, on a UNIX system, a semicolon is used as a command
+        delimiter in the shell interpreter. </p>
+      <p class="Paragraph">To by-pass there problems the Rock Ridge
+        Interchange Protocol (RRIP) was designed to allow users of POSIX
+        and other UNIX like systems to remain much of the directory
+        information that is in the native file system. This is important
+        because there systems use directory entries for much more than
+        just pointing to files. Directory entries can point to other
+        entries (symbolic links) or to device drivers that are linked to
+        peripheral devices such as hard disks, tape drives and CD-ROM
+        drives (device files). The directory entry includes information
+        that lets the system know what type of file it<span
+          style="mso-spacerun: yes"></span> is dealing with, whether it
+        is a regular file, directory, symbolic link, or device file. It
+        also has information regarding who has permission to read, write
+        and execute each file. Most of these systems are multi-users
+        systems, and you would not want just anyone to be able to write
+        to the device file that contains your operating system, because
+        they could accidentally erase the entire operating system. On
+        the other hand, permission may not set to tight, because it can
+        make CD-ROM unusable for users when they have no read access to
+        files. </p>
+      <p class="ParHeader">File Pathname Traversal </p>
+      <p class="Paragraph">There are two ways to locate a file on an ISO
+        9660 file system. One way is to successively interpret the
+        directory names and<span style="mso-spacerun: yes"></span> look
+        through each directory file structure to find the file (much the
+        way MS-DOS and UNIX work to find a file). The other way is
+        through the use of a precompiled table of paths, where all the
+        entries are enumerated in the successive contents of a file with
+        the corresponding entries. Some systems do not have a mechanism
+        for wandering through directories, they obtain a match by
+        consulting the table. </p>
+      <p class="Paragraph">While a large linear table seems a bit
+        arcane, it can be of great value, as you can quickly search
+        without wandering across the disk (thus reducing seek time). </p>
+      <p class="ParHeader">File Contents </p>
+      <p class="Paragraph">The ISO 9660 standard says practically
+        nothing about the contents of files themselves - they can
+        contain any kind of data one wishes to store. </p>
+      <p class="Paragraph">Although the ISO 9660 standard allows an
+        optional extended attributes record (XAR) stored at the
+        beginning of the file?s extent which can contain additional file
+        attribute information. Extension attributes are simply a way to
+        extend the attributes of files. Since attributes vary according
+        to the user, most everyone has a different opinion on what a
+        file attribute should specify. </p>
+      <p class="Paragraph">The Rock Ridge extensions is an example of
+        extended attributes to make POSIX alike file attributes (much
+        like UNIX). Rock Ridge can also be used in a networked
+        situation, since a single CD-ROM can be exported to a variety of
+        different operating systems viewing the same files, while
+        appearing to be in the local system?s native file structure
+        format. In sum, Rock Ridge is heading in the same ?universal?
+        direction of other file systems like the Network File System
+        (NFS). </p>
+      <p class="ParHeader">Conclusions </p>
+      <p class="Paragraph">A lot of people are aware of the ISO 9660
+        standard and its significance in sharing CD-ROM data between
+        different platforms. ISO compliant CD-ROMs are interchangeable
+        and can be used on any type of system and architecture. However,
+        the minimalism that helped make the ISO 9660 standard successful
+        may sometimes be too minimal for specific applications (such as
+        distributing POSIX based, bootable CD-ROMs). Because ISO 9660
+        does not adequately support the POSIX file system, the Rock
+        Ridge Group was formed to develop ISO 9660:1988 extensions,
+        which take advantage of the system-use area of the directory
+        record (provided for in ISO 9660) to store complete POSIX file
+        system information. </p>
+      <p class="Paragraph">Extensions to ISO 9660 can make a CD-ROM
+        appear like a given target operating system (such as a POSIX
+        compliant file system). By encoding these extensions (using the
+        sharing-use protocols), you can allow for separate sets of
+        attributes for the same file system. This lets you organize
+        extended information for different systems (such as VMS, DOS,
+        and UNIX) in a nonconflicting way. Also, any system that only
+        understands ISO 9660 without any extensions can still gain
+        access to the files and obtain the exact same contents of data
+        for a file. It is quite simple, if the extensions are not
+        understood, they are not used at all. You get the best of both
+        worlds: ISO compatibility and interoperability, and POSIX
+        operating system transparency and functionality. </p>
+      <p class="Paragraph">Technology is not standing still also,
+        because Philips and Sony just proposed a new CD-ROM standard
+        which could contains 2.3 Gbytes of data (almost 4 times more
+        than current CD-ROM standard). Probably the current ISO 9660
+        standard has to be adpated too with new extension attributes for
+        new applications (to be defined). </p>
+      <p class="ParHeader">References </p>
+      <p class="Paragraph"><!--[if !supportEmptyParas]--><!--[endif]--><o:p></o:p>
+      </p>
+      <p class="Paragraph"><!--[if !supportEmptyParas]--><!--[endif]--><o:p></o:p>
+      </p>
+      <p class="Paragraph"><!--[if !supportEmptyParas]--><!--[endif]--><o:p></o:p></p>
+    </div>
+  </body>
+</html>
